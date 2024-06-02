@@ -2,8 +2,11 @@ const flashcard = document.getElementById('flashcard');
 const front = document.getElementById('front');
 const back = document.getElementById('back');
 const nextBtn = document.getElementById('next-btn');
+const wordInput = document.getElementById('word-input');
+const translationInput = document.getElementById('translation-input');
+const addBtn = document.getElementById('add-btn');
 
-const flashcards = [
+let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [
     { word: "átl", translation: "Water" },
     { word: "amóxtli", translation: "Book" },
     { word: "káli", translation: "House" },
@@ -18,6 +21,17 @@ function loadFlashcard(index) {
     back.textContent = flashcards[index].word;
 }
 
+function addFlashcard() {
+    const newWord = wordInput.value.trim();
+    const newTranslation = translationInput.value.trim();
+    if (newWord && newTranslation) {
+        flashcards.push({ word: newWord, translation: newTranslation });
+        localStorage.setItem('flashcards', JSON.stringify(flashcards));
+        wordInput.value = '';
+        translationInput.value = '';
+    }
+}
+
 flashcard.addEventListener('click', () => {
     flashcard.classList.toggle('is-flipped');
 });
@@ -27,6 +41,8 @@ nextBtn.addEventListener('click', () => {
     loadFlashcard(currentIndex);
     flashcard.classList.remove('is-flipped');
 });
+
+addBtn.addEventListener('click', addFlashcard);
 
 // Initial load
 loadFlashcard(currentIndex);
