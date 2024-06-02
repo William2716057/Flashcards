@@ -12,8 +12,21 @@
             <div class="front" id="front">Translation</div>
             <div class="back" id="back">Word</div>
         </div>
+
         <button id="next-btn">Next</button>
     </div>
+    <div class="container">
+        <textarea id="text-to-read" rows="10" cols="50"></textarea>
+        <select id="language-select">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="fr-FR">French</option>
+            <option value="ko-KR">Korean</option>
+            <!-- Add more languages -->
+        </select>
+        <button id="read-button">Read</button>
+    </div>
+
     <div class="input-container">
         <textarea id="word-input" placeholder="Words (one per line)"></textarea>
         <textarea id="translation-input" placeholder="Translations (one per line)"></textarea>
