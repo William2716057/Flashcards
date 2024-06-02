@@ -8,11 +8,11 @@ const addBtn = document.getElementById('add-btn');
 const deleteAllBtn = document.getElementById('delete-all-btn');
 
 let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [
-    { word: "átl", translation: "Water" },
-    { word: "amóxtli", translation: "Book" },
-    { word: "káli", translation: "House" },
-    { word: "síuatl", translation: "Woman" },
-    { word: "kóatl", translation: "Snake" }
+  //  { word: "átl", translation: "Water" },
+  //  { word: "amóxtli", translation: "Book" },
+  //  { word: "káli", translation: "House" },
+  //  { word: "síuatl", translation: "Woman" },
+  //  { word: "kóatl", translation: "Snake" }
 ];
 
 let currentIndex = 0;
@@ -22,7 +22,7 @@ function loadFlashcard(index) {
         front.textContent = flashcards[index].translation;
         back.textContent = flashcards[index].word;
     } else {
-        front.textContent = 'No flashcards';
+        front.textContent = 'Add input';
         back.textContent = '';
     }
 }
