@@ -17,6 +17,14 @@ let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [
 
 let currentIndex = 0;
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+
 function loadFlashcard(index) {
     if (flashcards.length > 0) {
         front.textContent = flashcards[index].translation;
@@ -38,11 +46,13 @@ function addFlashcards() {
         localStorage.setItem('flashcards', JSON.stringify(flashcards));
         wordInput.value = '';
         translationInput.value = '';
+        shuffleArray(flashcards);
+        currentIndex = 0;
+        loadFlashcard(currentIndex);
     } else {
         alert('The number of words and translations must match.');
     }
 }
-
 function deleteAllFlashcards() {
     flashcards = [];
     localStorage.removeItem('flashcards');
@@ -64,4 +74,5 @@ addBtn.addEventListener('click', addFlashcards);
 deleteAllBtn.addEventListener('click', deleteAllFlashcards);
 
 // Initial load
+shuffleArray(flashcards);
 loadFlashcard(currentIndex);
