@@ -5,6 +5,7 @@ const nextBtn = document.getElementById('next-btn');
 const wordInput = document.getElementById('word-input');
 const translationInput = document.getElementById('translation-input');
 const addBtn = document.getElementById('add-btn');
+const deleteAllBtn = document.getElementById('delete-all-btn');
 
 let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [
     { word: "átl", translation: "Water" },
@@ -17,19 +18,35 @@ let flashcards = JSON.parse(localStorage.getItem('flashcards')) || [
 let currentIndex = 0;
 
 function loadFlashcard(index) {
-    front.textContent = flashcards[index].translation;
-    back.textContent = flashcards[index].word;
+    if (flashcards.length > 0) {
+        front.textContent = flashcards[index].translation;
+        back.textContent = flashcards[index].word;
+    } else {
+        front.textContent = 'No flashcards';
+        back.textContent = '';
+    }
 }
 
-function addFlashcard() {
-    const newWord = wordInput.value.trim();
-    const newTranslation = translationInput.value.trim();
-    if (newWord && newTranslation) {
-        flashcards.push({ word: newWord, translation: newTranslation });
+function addFlashcards() {
+    const words = wordInput.value.trim().split('\n').map(item => item.trim());
+    const translations = translationInput.value.trim().split('\n').map(item => item.trim());
+
+    if (words.length === translations.length) {
+        words.forEach((word, index) => {
+            flashcards.push({ word, translation: translations[index] });
+        });
         localStorage.setItem('flashcards', JSON.stringify(flashcards));
         wordInput.value = '';
         translationInput.value = '';
+    } else {
+        alert('The number of words and translations must match.');
     }
+}
+
+function deleteAllFlashcards() {
+    flashcards = [];
+    localStorage.removeItem('flashcards');
+    loadFlashcard(0);
 }
 
 flashcard.addEventListener('click', () => {
@@ -42,7 +59,9 @@ nextBtn.addEventListener('click', () => {
     flashcard.classList.remove('is-flipped');
 });
 
-addBtn.addEventListener('click', addFlashcard);
+addBtn.addEventListener('click', addFlashcards);
+
+deleteAllBtn.addEventListener('click', deleteAllFlashcards);
 
 // Initial load
 loadFlashcard(currentIndex);
